@@ -1,0 +1,50 @@
+@page
+@model Catalog.Pages_Films.IndexModel
+@{
+    ViewData["Title"] = "Филми";
+}
+
+<h1>Филми</h1>
+
+@if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+{
+    <p>
+        <a asp-page="Create" class="btn btn-primary">Създай нов филм</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Заглавие</th>
+            <th>Режисьор</th>
+            <th>Година</th>
+            <th>Рейтинг</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Film)
+        {
+            <tr>
+                <td>@item.Title</td>
+                <td>@item.Director</td>
+                <td>@item.Year</td>
+                <td>@item.Rating</td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Детайли</a>
+
+                    @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Редактирай</a>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Изтрий</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
