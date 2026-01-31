@@ -7,30 +7,35 @@
 
 <h1>Genres</h1>
 
-<p>
-    <a asp-page="Create">Create New Genre</a>
-</p>
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+    <p>
+        <a asp-page="Create" class="btn btn-primary">Create New Genre</a>
+    </p>
+}
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre[0].Name)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Genres[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Genres[0].Description)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Genre)
+        @foreach (var genre in Model.Genres)
         {
             <tr>
+                <td>@genre.Name</td>
+                <td>@genre.Description</td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-page="Details" asp-route-id="@genre.Id" class="btn btn-info btn-sm">Details</a>
+
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-page="Edit" asp-route-id="@genre.Id" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-page="Delete" asp-route-id="@genre.Id" class="btn btn-danger btn-sm">Delete</a>
+                    }
                 </td>
             </tr>
         }

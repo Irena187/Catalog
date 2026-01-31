@@ -1,34 +1,29 @@
 using Catalog.Data.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Pages_Genre
 {
     [Authorize(Roles = "Manager,Admin")]
     public class CreateModel : PageModel
     {
-        private readonly Catalog.Data.Models.CatalogContext _context;
+        private readonly CatalogContext _context;
 
-        public CreateModel(Catalog.Data.Models.CatalogContext context)
+        public CreateModel(CatalogContext context)
         {
             _context = context;
         }
+
+        [BindProperty]
+        public Genre Genre { get; set; } = default!;
 
         public IActionResult OnGet()
         {
             return Page();
         }
 
-        [BindProperty]
-        public Film Film { get; set; } = default!;
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -36,7 +31,10 @@ namespace Catalog.Pages_Genre
                 return Page();
             }
 
-            _context.Films.Add(Film);
+            var maxId = await _context.Genres.MaxAsync(g => (int?)g.Id) ?? 0;
+            Genre.Id = maxId + 1;
+
+            _context.Genres.Add(Genre);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Catalog.Pages_Actor
@@ -13,15 +10,15 @@ namespace Catalog.Pages_Actor
     [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
-        private readonly Catalog.Data.Models.CatalogContext _context;
+        private readonly CatalogContext _context;
 
-        public DeleteModel(Catalog.Data.Models.CatalogContext context)
+        public DeleteModel(CatalogContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Film Film { get; set; } = default!;
+        public Actor Actor { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,16 +27,14 @@ namespace Catalog.Pages_Actor
                 return NotFound();
             }
 
-            var film = await _context.Films.FirstOrDefaultAsync(m => m.Id == id);
+            Actor = await _context.Actors
+                .FirstOrDefaultAsync(a => a.Id == id);
 
-            if (film == null)
+            if (Actor == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Film = film;
-            }
+
             return Page();
         }
 
@@ -50,11 +45,11 @@ namespace Catalog.Pages_Actor
                 return NotFound();
             }
 
-            var film = await _context.Films.FindAsync(id);
-            if (film != null)
+            var actor = await _context.Actors.FindAsync(id);
+
+            if (actor != null)
             {
-                Film = film;
-                _context.Films.Remove(Film);
+                _context.Actors.Remove(actor);
                 await _context.SaveChangesAsync();
             }
 

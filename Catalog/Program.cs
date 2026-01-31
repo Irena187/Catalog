@@ -10,7 +10,6 @@ namespace Catalog
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddRazorPages();
 
             // DbContext конфигурация

@@ -1,24 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Catalog.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Catalog.Data.Models;
+using System.Threading.Tasks;
 
 namespace Catalog.Pages_Genre
 {
     public class DetailsModel : PageModel
     {
-        private readonly Catalog.Data.Models.CatalogContext _context;
+        private readonly CatalogContext _context;
 
-        public DetailsModel(Catalog.Data.Models.CatalogContext context)
+        public DetailsModel(CatalogContext context)
         {
             _context = context;
         }
 
-        public Film Film { get; set; } = default!;
+        public Genre Genre { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -27,15 +24,13 @@ namespace Catalog.Pages_Genre
                 return NotFound();
             }
 
-            var film = await _context.Films.FirstOrDefaultAsync(m => m.Id == id);
-            if (film == null)
+            Genre = await _context.Genres.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (Genre == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Film = film;
-            }
+
             return Page();
         }
     }

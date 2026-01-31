@@ -4,26 +4,25 @@ namespace Catalog.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Email адресът е задължителен")]
-        [EmailAddress(ErrorMessage = "Невалиден email адрес")]
+        [Required(ErrorMessage = "Email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Паролата е задължителна")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Паролата трябва да бъде поне 6 символа")]
+        [Required(ErrorMessage = "Password is required")]
+        [StringLength(100, MinimumLength = 6, ErrorMessage = "The password must be at least 6 characters long")]
         [DataType(DataType.Password)]
-        [Display(Name = "Парола")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Потвърждението е задължително")]
+        [Required(ErrorMessage = "Password confirmation is required")]
         [DataType(DataType.Password)]
-        [Display(Name = "Потвърди парола")]
-        [Compare("Password", ErrorMessage = "Паролите не съвпадат")]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
-        // Добавяме това, за да може потребителят в регистрационната форма да добавя роли
-        [Required(ErrorMessage = "Изберете роля")]
-        [Display(Name = "Роля")]
+        [Required(ErrorMessage = "Please select a role")]
+        [Display(Name = "Role")]
         public string Role { get; set; }
     }
 }

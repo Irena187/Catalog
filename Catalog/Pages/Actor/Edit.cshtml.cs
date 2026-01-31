@@ -2,10 +2,7 @@ using Catalog.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,15 +11,15 @@ namespace Catalog.Pages_Actor
     [Authorize(Roles = "Manager,Admin")]
     public class EditModel : PageModel
     {
-        private readonly Catalog.Data.Models.CatalogContext _context;
+        private readonly CatalogContext _context;
 
-        public EditModel(Catalog.Data.Models.CatalogContext context)
+        public EditModel(CatalogContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Film Film { get; set; } = default!;
+        public Actor Actor { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -31,17 +28,16 @@ namespace Catalog.Pages_Actor
                 return NotFound();
             }
 
-            var film =  await _context.Films.FirstOrDefaultAsync(m => m.Id == id);
-            if (film == null)
+            Actor = await _context.Actors.FirstOrDefaultAsync(a => a.Id == id);
+
+            if (Actor == null)
             {
                 return NotFound();
             }
-            Film = film;
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -49,7 +45,7 @@ namespace Catalog.Pages_Actor
                 return Page();
             }
 
-            _context.Attach(Film).State = EntityState.Modified;
+            _context.Attach(Actor).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +53,7 @@ namespace Catalog.Pages_Actor
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FilmExists(Film.Id))
+                if (!ActorExists(Actor.Id))
                 {
                     return NotFound();
                 }
@@ -70,9 +66,9 @@ namespace Catalog.Pages_Actor
             return RedirectToPage("./Index");
         }
 
-        private bool FilmExists(int id)
+        private bool ActorExists(int id)
         {
-            return _context.Films.Any(e => e.Id == id);
+            return _context.Actors.Any(a => a.Id == id);
         }
     }
 }

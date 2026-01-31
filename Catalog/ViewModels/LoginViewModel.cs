@@ -4,17 +4,17 @@ namespace Catalog.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Email адресът е задължителен")]
-        [EmailAddress(ErrorMessage = "Невалиден email адрес")]
+        [Required(ErrorMessage = "Email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid email address")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Паролата е задължителна")]
+        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
-        [Display(Name = "Парола")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Запомни ме")]
+        [Display(Name = "Remember me")]
         public bool RememberMe { get; set; }
     }
 }

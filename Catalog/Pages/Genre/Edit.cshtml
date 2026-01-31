@@ -2,51 +2,37 @@
 @model Catalog.Pages_Genre.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Genre";
 }
 
-<h1>Edit</h1>
+<h1>Edit Genre</h1>
 
-<h4>Film</h4>
+<h4>Genre</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Film.Id" />
+
+            <input type="hidden" asp-for="Genre.Id" />
+
             <div class="form-group">
-                <label asp-for="Film.Title" class="control-label"></label>
-                <input asp-for="Film.Title" class="form-control" />
-                <span asp-validation-for="Film.Title" class="text-danger"></span>
+                <label asp-for="Genre.Name" class="control-label"></label>
+                <input asp-for="Genre.Name" class="form-control" />
+                <span asp-validation-for="Genre.Name" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Film.Year" class="control-label"></label>
-                <input asp-for="Film.Year" class="form-control" />
-                <span asp-validation-for="Film.Year" class="text-danger"></span>
+                <label asp-for="Genre.Description" class="control-label"></label>
+                <textarea asp-for="Genre.Description" class="form-control"></textarea>
+                <span asp-validation-for="Genre.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Film.Director" class="control-label"></label>
-                <input asp-for="Film.Director" class="form-control" />
-                <span asp-validation-for="Film.Director" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Film.Description" class="control-label"></label>
-                <input asp-for="Film.Description" class="form-control" />
-                <span asp-validation-for="Film.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Film.Rating" class="control-label"></label>
-                <input asp-for="Film.Rating" class="form-control" />
-                <span asp-validation-for="Film.Rating" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group mt-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-

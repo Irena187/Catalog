@@ -1,6 +1,8 @@
+using Catalog.Data.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Catalog.Data.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Catalog.Pages_Genre
 {
@@ -13,11 +15,11 @@ namespace Catalog.Pages_Genre
             _context = context;
         }
 
-        public IList<Genre> Genre { get; set; } = new List<Genre>();
+        public IList<Genre> Genres { get; set; } = new List<Genre>();
 
         public async Task OnGetAsync()
         {
-            Genre = await _context.Genres.ToListAsync();
+            Genres = await _context.Genres.ToListAsync();
         }
     }
 }

@@ -1,7 +1,7 @@
 @page
 @model Catalog.Pages_Films.IndexModel
 @{
-    ViewData["Title"] = "Филми";
+    ViewData["Title"] = "Films";
 }
 
 <h1>Филми</h1>
@@ -9,17 +9,17 @@
 @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
 {
     <p>
-        <a asp-page="Create" class="btn btn-primary">Създай нов филм</a>
+        <a asp-page="Create" class="btn btn-primary">Create new film</a>
     </p>
 }
 
 <table class="table">
     <thead>
         <tr>
-            <th>Заглавие</th>
-            <th>Режисьор</th>
-            <th>Година</th>
-            <th>Рейтинг</th>
+            <th>Title</th>
+            <th>Director</th>
+            <th>Year</th>
+            <th>Rating</th>
             <th></th>
         </tr>
     </thead>
@@ -32,16 +32,16 @@
                 <td>@item.Year</td>
                 <td>@item.Rating</td>
                 <td>
-                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Детайли</a>
+                    <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
 
                     @if (User.IsInRole("Manager") || User.IsInRole("Admin"))
                     {
-                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Редактирай</a>
+                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
                     }
 
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Изтрий</a>
+                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
                     }
                 </td>
             </tr>
